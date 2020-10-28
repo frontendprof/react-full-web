@@ -1,18 +1,33 @@
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
+import { Button } from './Button';
 
-
+import "./Navbar.css";
 
 
 function Navbar() {
 
 
-    const [click,setClick]=useState(false);
+    const [click, setClick] = useState(false);
+    const [button, setButton] = useState(true);
 
-    const handleClick=()=>setClick(!click);
 
-    const closeMobileMenu=()=>setClick(false);
+
+
+    const handleClick = () => setClick(!click);
+
+    const closeMobileMenu = () => setClick(false);
+
+    const showButton = () => {
+        if (window.innerWidth < 960) {
+            setButton(false)
+        } else {
+            setButton(true)
+        }
+    }
+
+    window.addEventListener("resize", showButton);
 
     return (
         <>
@@ -24,11 +39,11 @@ function Navbar() {
                     </Link>
 
                     <div className="menu-icon" onClick={handleClick}>
-                        <i className={click?'fas fa-times':'fas fa-bars'}/>
+                        <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
                     </div>
 
-                    <ul className={click? "nav-menu active": 'nav-menu'}>
-                        
+                    <ul className={click ? "nav-menu active" : 'nav-menu'}>
+
                         <li className="nav-item">
                             <Link to="/" className="nav-links" onClick={closeMobileMenu}>
                                 Home
@@ -54,6 +69,8 @@ function Navbar() {
                         </li>
 
                     </ul>
+
+                    {button && <Button buttonStyle="btn-outline">SIGN UP</Button>}
                 </div>
             </nav>
         </>
